@@ -9,32 +9,26 @@ public class Main {
         //tagastab String, parameetriks String
         //teha igast funktsioonist 2 erineva sisendiga väljakutset
 
-        double kogumaksumus1 = arvutaTaksoMaksumus(3);
-        System.out.println(kogumaksumus1);
-        double kogumaksumus2 = arvutaTaksoMaksumus(2);
-        System.out.println(kogumaksumus2);
-        String hinnang1 = temperatuuriHinnang(2.2);
-        System.out.println(hinnang1);
-        String hinnang2 = temperatuuriHinnang(-1.2);
-        System.out.println(hinnang2);
-        prindiForTsykkel("Pikk sõna");
-        prindiForTsykkel("Lyh");
+        String s6na1 = "Tere";
+        String s6na2 = "Tervist";
+        System.out.println("Esimese sõna pikkus on: " + tagastaPikkus(s6na1));
+        System.out.println("Teise sõna pikkus on :" + tagastaPikkus(s6na2));
+
+        System.out.println("Arv ruudus = " + arvutaRuut(3));
+        System.out.println("Arv ruudus = " + arvutaRuut(25));
+
+        System.out.println("On 'a': " + kontrolliA('a'));
+        System.out.println("On 'a': " + kontrolliA('x'));
 
     }
 
-    private static double arvutaTaksoMaksumus(int tunnid) {
-        return 3 + 0.9*tunnid;
+    private static boolean kontrolliA(char t2ht) {
+        return t2ht == 'a';
     }
-    private static String temperatuuriHinnang(double temp) {
-        if (temp < 0) {
-            return "Vesi on jääs";
-        } else {
-            return "On vesi";
-        }
+    private static long arvutaRuut(long number) {
+        return number * number;
     }
-    private static void prindiForTsykkel(String tahtedeArv) {
-        for (int i = 0; i < tahtedeArv.length(); i++) {
-            System.out.println(i);
-        }
+    private static int tagastaPikkus(String s6na) {
+        return s6na.length();
     }
 }
