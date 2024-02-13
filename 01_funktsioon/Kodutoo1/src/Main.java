@@ -19,7 +19,6 @@ public class Main {
 
         System.out.println("On 'a': " + kontrolliA('a'));
         System.out.println("On 'a': " + kontrolliA('x'));
-
     }
 
 
