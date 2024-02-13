@@ -22,13 +22,14 @@ public class Main {
 
     }
 
-    private static boolean kontrolliA(char t2ht) {
-        return t2ht == 'a';
+
+    private static int tagastaPikkus(String s6na) {
+        return s6na.length();
     }
     private static long arvutaRuut(long number) {
         return number * number;
     }
-    private static int tagastaPikkus(String s6na) {
-        return s6na.length();
+    private static boolean kontrolliA(char t2ht) {
+        return t2ht == 'a';
     }
 }
