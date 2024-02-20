@@ -12,5 +12,5 @@ public class Tellimus {
     public double tellimuseSummaDollarites() {
         return tellimuseKogusumma * 1.07;
     }
-    public void telljaNimeVahetus(String tell)
+    public void telljaNimeVahetus(String tell);
 }

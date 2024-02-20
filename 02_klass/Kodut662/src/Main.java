@@ -15,7 +15,7 @@ public class Main {
         kasutaja.muudaAktiivne();
         System.out.println(kasutaja.aktiivne);
         kasutaja2.lisaRaha(500.0);
-        double kasutaja2Raha
+        double kasutaja2Raha;
         System.out.println(kasutaja2Raha);
 
         Tellimus tellimus1 = new Tellimus("M", 199.0, "Coca-Cola");
