@@ -8,7 +8,7 @@ public class Main {
         kasutaja.v2ljaMakse(2500);
         System.out.println("Hetke kontoseis: " + kasutaja.getKontoSeis() + " EUR");
 
-        System.out.println("Kontonumbrile " + kasutaja2.kontoNumber + " tehakse Sissemakse");
+        System.out.println("Kontonumbrile " + kasutaja2.kontoNumber + " tehakse sissemakse");
         kasutaja2.sisseMakse(123.0);
         System.out.println("Hetke kontoseis: " + kasutaja2.getKontoSeis() + " EUR");
     }
