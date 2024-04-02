@@ -8,53 +8,60 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UniversityEntityController {
-    List<UniversityEntity> universities = new ArrayList<>();
+    UniversityRepository universityRepository;
+
+    public UniversityEntityController(UniversityRepository uinversityRepository) {
+        this.universityRepository = uinversityRepository;
+    }
+    //List<UniversityEntity> universities = new ArrayList<>();
 
     // localhost:8080/api/universities
     @GetMapping("universities")
     public List<UniversityEntity> getAllUniversities() {
-        return universities;
+        return universityRepository.findAll();
     }
 
     // localhost:8080/api/universities -->
     // body - raw - json - { "id": 1, "name": "Tallinna Ülikool", "location": "Tallinn", "totalStudents": 9000 }
-    @PostMapping("universities")
-    public void addUniversity(@RequestBody UniversityEntity university) {
-        universities.add(university);
+    @PostMapping("universities/{id}/{name}/{location}/{totalStudents}")
+    public List<UniversityEntity> addUniversity(
+            @PathVariable int id,
+            @PathVariable String name,
+            @PathVariable String location,
+            @PathVariable int totalStudents
+    ) {
+        UniversityEntity university = new UniversityEntity(id, name, location, totalStudents);
+        universityRepository.save(university);
+        return universityRepository.findAll();
     }
 
     // localhost: 8080/api/universities/1   number tähistab id
     @DeleteMapping("universities/{id}")
-    public List<UniversityEntity> deleteUniversity(@PathVariable int id) {
-        for (UniversityEntity uni : universities) {
-            if (uni.getId() == id) {
-                universities.remove(uni);
-                break;
-            }
-        }
-        return universities;
+    public List<UniversityEntity> deleteUniversity(@PathVariable Integer id) {
+        universityRepository.deleteById(id);
+        return universityRepository.findAll();
     }
 
     // localhost:8080/api/universities/2 -->
     // body - raw - json - { "id": 2, "name": "Tartu Ülikool", "location": "Tartu", "totalStudents": 11000 }
-    @PutMapping("universities/{id}")
-    public List<UniversityEntity> updateUniversity(@PathVariable int id, @RequestBody UniversityEntity updatedUniversity) {
-        for (UniversityEntity uni : universities) {
-            if (uni.getId() == id) {
-                uni.setName(updatedUniversity.getName());
-                uni.setLocation(updatedUniversity.getLocation());
-                uni.setTotalStudents(updatedUniversity.getTotalStudents());
-                break;
-            }
-        }
-        return universities;
+    @PutMapping("universities/{id}/{name}/{location}/{totalStudents}")
+    public List<UniversityEntity> updateUniversity(
+            @PathVariable int id,
+            @PathVariable String name,
+            @PathVariable String location,
+            @PathVariable int totalStudents
+    ) {
+        UniversityEntity university = universityRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("University not found with id: " + id));
+        universityRepository.save(university);
+        return universityRepository.findAll();
     }
 
     // localhost:8080/api/universities/totalStudents
     @GetMapping("universities/totalStudents")
     public int getTotalStudentsInUniversities() {
         int total = 0;
-        for (UniversityEntity uni : universities) {
+        for (UniversityEntity uni : universityRepository.findAll()) {
             total += uni.getTotalStudents();
         }
         return total;

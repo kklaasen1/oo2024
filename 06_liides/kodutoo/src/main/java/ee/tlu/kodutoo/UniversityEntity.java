@@ -1,15 +1,23 @@
 package ee.tlu.kodutoo;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@Entity
+@NoArgsConstructor
 public class UniversityEntity {
-    int id;
+    @Id
+    Integer id;
     String name;
     String location;
     int totalStudents;
 
-    public UniversityEntity(int id, String name, String location, int totalStudents) {
+    /*public UniversityEntity(int id, String name, String location, int totalStudents) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -42,5 +50,5 @@ public class UniversityEntity {
 
     public void setTotalStudents(int totalStudents) {
         this.totalStudents = totalStudents;
-    }
+    }*/
 }
