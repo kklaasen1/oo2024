@@ -1,13 +1,13 @@
-package ee.tlu.salat;
+package ee.tlu.salat.controller;
 
+import ee.tlu.salat.entity.Toidukomponent;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//Controlleril alati RestControllerit vaja
 @RestController
-public class ToidukomponentController {
+public class ToidukomponentController2 {
     List<Toidukomponent> toidukomponendid = new ArrayList<>();
 
     @PostMapping("toidukomponent")

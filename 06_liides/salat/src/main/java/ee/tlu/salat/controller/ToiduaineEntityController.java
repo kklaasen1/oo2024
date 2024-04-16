@@ -1,42 +1,52 @@
-package ee.tlu.salat;
+package ee.tlu.salat.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import ee.tlu.salat.entity.ToiduaineEntity;
+import ee.tlu.salat.repository.ToiduaineRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@RestController //see klass on kontroller ehk front-end saab siit ligi
+@RestController // kontroller EHK front-end saab siit ligi
 @RequestMapping("/api") // saan igale API otspunktile eesliidese panna
 @CrossOrigin(origins = "http://localhost:3000") // see ütleb, mis rakendus mulle ligi pääseb
 public class ToiduaineEntityController {
+    // ["Kartul", "Vorst"];
+    // [{nimi: "Kartul, valk: 0}, {nimi: "Vorst"}]
 
-    // ["Kartul", "Kapsas"]
-    // [{nimi: "Kartul, valk: 0"}]
+    //@Autowired
+    ToiduaineRepository toiduaineRepository; // ühendan Repository, et saaks ligi andmebaasi päringutele
+    //ToiduaineRepository toiduaineRepository = new ToiduaineRepository();
 
-    ToiduaineRepository toiduaineRepository; //ühendan repository, et saaks ligi andmebaasi päringutele
+    // Dependency Injection
     public ToiduaineEntityController(ToiduaineRepository toiduaineRepository) {
         this.toiduaineRepository = toiduaineRepository;
     }
 
-    //@Autowired
-    //ToiduaineRepository toiduaineRepository;
+//    @Autowired
+//    ToiduaineRepository toiduaineRepository;
+
     //List<ToiduaineEntity> toiduained = new ArrayList<>();
 
-    // Localhost:8080/api/toiduained
+    // localhost:8080/api/toiduained
     @GetMapping("toiduained")
     public List<ToiduaineEntity> saaToiduained() {
         return toiduaineRepository.findAll();
     }
 
-    // localhost:8080/api/toiduained/Kapsas/5/5/10
+    //localhost:8080/api/toiduained/Vorst/15/5/1
+    // ON järjekord tähtis
+    // Ma võin kogemata sassi ajada, muutes järjekorda ja paneb valesti
+    // Ma ei saa ühtegi vahele jätta
+
+    //localhost:8080/api/toiduained/Vorst/15/5/1
     @PostMapping("toiduained/{nimi}/{valk}/{rasv}/{sysivesik}")
     public List<ToiduaineEntity> lisaToiduaine(
             @PathVariable String nimi,
             @PathVariable int valk,
             @PathVariable int rasv,
             @PathVariable int sysivesik
-            ) {
+    ) {
         if (valk + rasv + sysivesik > 100) {
             return toiduaineRepository.findAll();
         }
@@ -47,7 +57,7 @@ public class ToiduaineEntityController {
 
     @PostMapping("toiduained")
     public List<ToiduaineEntity> lisaToiduaine(@RequestBody ToiduaineEntity toiduaineEntity) {
-        if (toiduaineEntity.valk + toiduaineEntity.rasv + toiduaineEntity.sysivesik > 100) {
+        if (toiduaineEntity.getValk() + toiduaineEntity.getRasv() + toiduaineEntity.getSysivesik() > 100) {
             return toiduaineRepository.findAll();
         }
         //ToiduaineEntity toiduaine = new ToiduaineEntity(nimi, valk, rasv, sysivesik);
@@ -61,7 +71,8 @@ public class ToiduaineEntityController {
         return toiduaineRepository.findAll();
     }
 
-    // localhost:8080/api/toiduained?index=0&nimi=Kartul&valk=15&rasv=5&sysivesik=10
+    // localhost:8080/api/toiduained/Vorst/15/5/1 <-- PathVariable näide
+    // localhost:8080/api/toiduained?index=0&nimi=Vorst&valk=15&rasv=5&sysivesik=1
     @PutMapping("toiduained")
     public List<ToiduaineEntity> muudaToiduaine(
             @RequestParam int index,
@@ -72,8 +83,8 @@ public class ToiduaineEntityController {
     ) {
         ToiduaineEntity toiduaine = new ToiduaineEntity(nimi, valk, rasv, sysivesik);
         //toiduained.set(index, toiduaine);
-        toiduaineRepository.save(toiduaine); //täpselt sama, mis POST
-        //Hibernate kontrollib, kas on juba sellise primaarvõtmega element andmebaasis (kui on, muudab; kui ei ole, lisab)
+        toiduaineRepository.save(toiduaine); // täpselt sama mis POST
+        // Hibernate kontrollib, kas on juba sellise primaarvõtmega element andmebaasis
         return toiduaineRepository.findAll();
     }
 
@@ -86,6 +97,5 @@ public class ToiduaineEntityController {
     public int toiduaineteKoguarv() {
         return toiduaineRepository.findAll().size();
     }
-
 
 }

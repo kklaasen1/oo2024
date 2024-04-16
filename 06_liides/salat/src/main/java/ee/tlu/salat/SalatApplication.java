@@ -12,7 +12,6 @@ public class SalatApplication {
 
 }
 
-
 //kodus numbritega list, get, post, delete ja pute peavad olemas olema, oma vabalt valitud entity (autod, loomad, raamatukogu
 // või midagi mis on varem kasutatud), controller
 // uue projekti alustamiseks start.spring.io --> uus nimi (salat asemel kodutoo1)
