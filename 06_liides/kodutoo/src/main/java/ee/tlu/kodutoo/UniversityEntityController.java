@@ -1,5 +1,6 @@
 package ee.tlu.kodutoo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -7,11 +8,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UniversityEntityController {
-    UniversityRepository universityRepository;
+    private final UniversityRepository universityRepository;
+    private final DepartmentRepository departmentRepository;
 
-    public UniversityEntityController(UniversityRepository uinversityRepository) {
-        this.universityRepository = uinversityRepository;
+    @Autowired
+    public UniversityEntityController(UniversityRepository universityRepository, DepartmentRepository departmentRepository) {
+        this.universityRepository = universityRepository;
+        this.departmentRepository = departmentRepository;
     }
     //List<UniversityEntity> universities = new ArrayList<>();
 
@@ -65,5 +70,26 @@ public class UniversityEntityController {
             total += uni.getTotalStudents();
         }
         return total;
+    }
+
+    // localhost:8080/api/departments
+    @GetMapping("departments")
+    public List<Department> getAllDepartments() {
+        return departmentRepository.findAll();
+    }
+
+    // localhost:8080/api/departments
+    // body - raw - json - { "name": "Digitehnoloogiate Instituut", "numberOfStudents": 300, "universityId": 1 }
+    @PostMapping("departments")
+    public List<Department> addDepartment(@RequestBody Department department) {
+        departmentRepository.save(department);
+        return departmentRepository.findAll();
+    }
+
+    // localhost:8080/api/departments/{id}
+    @DeleteMapping("departments/{id}")
+    public List<Department> deleteDepartment(@PathVariable Integer id) {
+        departmentRepository.deleteById(id);
+        return departmentRepository.findAll();
     }
 }

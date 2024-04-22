@@ -2,6 +2,7 @@ package ee.tlu.salat.controller;
 
 import ee.tlu.salat.model.Omniva;
 import ee.tlu.salat.model.Post;
+import ee.tlu.salat.model.nordpool.Activity;
 import ee.tlu.salat.model.nordpool.Nordpool;
 import ee.tlu.salat.model.nordpool.TimestampPrice;
 import org.springframework.http.HttpMethod;
@@ -93,5 +94,51 @@ public class RestTemplateController {
         }
 
         return timestampPrices;
+    }
+
+
+    @GetMapping("saa-tegevus")
+    public Activity getRandomActivity() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://www.boredapi.com/api/activity";
+        ResponseEntity<Activity> response = restTemplate.exchange(url, HttpMethod.GET, null, Activity.class);
+        return response.getBody();
+    }
+
+    @GetMapping("saa-tegevus/{type}")
+    public Activity getRandomActivityByType() {
+        RestTemplate restTemplate = new RestTemplate();
+        Activity activity = null;
+        String url = "https://www.boredapi.com/api/activity";
+        while (true) {
+            // Make the API request to fetch a random activity
+            ResponseEntity<Activity> response = restTemplate.exchange(url, HttpMethod.GET, null, Activity.class);
+            activity = response.getBody();
+
+            // Check if the activity type is "cooking"
+            if (activity != null && "cooking".equalsIgnoreCase(activity.getType())) {
+                // Activity matches the type "cooking"
+                return activity;
+            }
+        }
+    }
+
+    @GetMapping("saa-tegevus/koos-teistega")
+    public Activity getRandomActivityWithMoreThanOneParticipant() {
+        RestTemplate restTemplate = new RestTemplate();
+        Activity activity = null;
+        String url = "https://www.boredapi.com/api/activity";
+
+        while (true) {
+            // Make the API request to fetch a random activity
+            ResponseEntity<Activity> response = restTemplate.exchange(url, HttpMethod.GET, null, Activity.class);
+            activity = response.getBody();
+
+            // Check if the activity has more than one participant
+            if (activity != null && activity.getParticipants() > 1) {
+                // Activity matches the criteria of more than one participant
+                return activity;
+            }
+        }
     }
 }

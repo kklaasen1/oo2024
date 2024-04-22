@@ -16,7 +16,7 @@ public class Toidukomponent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @ManyToOne(cascade = CascadeType.ALL) // kui kustutatakse Toiduaine, siis kustuvad ka temega kõik seotud toiudkomponendid
+    @ManyToOne(cascade = CascadeType.ALL) // kui kustutatakse Toiduaine, siis kustuvad ka temaga kõik seotud toidukomponendid
     ToiduaineEntity toiduaine;
 
     //@ManyToMany
