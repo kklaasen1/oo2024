@@ -63,9 +63,9 @@ function App() {
 
   function addDepartment() {
     const departmentData = {
-      name: departmentName, 
-      numberOfStudents: parseInt(numberOfStudents, 10),
-      universityId: {id: parseInt(universityId, 10)},
+      name: departmentNameRef.current.value, 
+      numberOfStudents: parseInt(numberOfStudentsRef.current.value, 10),
+      university: {id: parseInt(universityIdRef.current.value, 10)},
     };
 
     fetch("http://localhost:8080/api/departments", {
