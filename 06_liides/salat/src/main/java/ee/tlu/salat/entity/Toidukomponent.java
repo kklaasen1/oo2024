@@ -19,6 +19,9 @@ public class Toidukomponent {
     @ManyToOne(cascade = CascadeType.ALL) // kui kustutatakse Toiduaine, siis kustuvad ka temaga kõik seotud toidukomponendid
     ToiduaineEntity toiduaine;
 
+    @ManyToOne
+    Toit toit;
+
     //@ManyToMany
     //List<ToiduaineEntity> toiduained;
     int kogus;
